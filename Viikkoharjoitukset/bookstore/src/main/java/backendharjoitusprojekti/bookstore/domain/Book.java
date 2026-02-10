@@ -4,27 +4,41 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Size(min=2, max=50)
     private String title;
+    @Size(min=3, max=30)
     private String author;
+    @NotNull
     private int publicationYear;
+    @Size(min=5, max=15)
     private String isbn;
+    @Size(min=4, max=10)
     private String price;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Category category;
     
     public Book() {
     }
 
-    public Book(String title, String author, int publicationYear, String isbn, String price) {
+    public Book(String title, String author, int publicationYear, String isbn, String price, Category category) {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.isbn = isbn;
         this.price = price;
+        this.category = category;
     }
 
     public Long getId() {
@@ -75,10 +89,24 @@ public class Book {
         this.price = price;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
-        return "Book [id=" + id + ", title=" + title + ", author=" + author + ", publicationYear=" + publicationYear
+        if (this.category != null) {
+            return "Book [id=" + id + ", title=" + title + ", author=" + author + ", publicationYear=" + publicationYear
+                + ", isbn=" + isbn + ", price=" + price + ", category=" + this.getCategory() + "]";
+        } else {
+            return "Book [id=" + id + ", title=" + title + ", author=" + author + ", publicationYear=" + publicationYear
                 + ", isbn=" + isbn + ", price=" + price + "]";
+        }
+        
     }
 
 }
