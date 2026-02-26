@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import backendharjoitusprojekti.bookstore.domain.AppUser;
+import backendharjoitusprojekti.bookstore.domain.AppUserRepository;
 import backendharjoitusprojekti.bookstore.domain.Book;
 import backendharjoitusprojekti.bookstore.domain.BookRepository;
 import backendharjoitusprojekti.bookstore.domain.Category;
@@ -21,7 +23,7 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository categoryRepository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository categoryRepository, AppUserRepository userRepository) {
 		return (args) -> {
 			log.info("save a couple of categories");
 
@@ -45,6 +47,12 @@ public class BookstoreApplication {
 			for (Book book : repository.findByTitle("Animal Farm")) {
 				log.info(book.toString());
 			}
+
+			log.info("create user/password pairs admin/admin and user/user");
+			AppUser user1 = new AppUser("user", "$2a$10$BJYjlTlBFff2HMI8bxOZj.1UsDYnta6V8cVxLmEutacc8rlzCAzi.", "USER");
+			AppUser user2 = new AppUser("admin", "$2a$10$681R2/IWETdQpqSs2AdFM.xAcTlqj2uKZzK8JEPt.uomDejxHGzu2", "ADMIN");
+			userRepository.save(user1);
+			userRepository.save(user2);
 		};
 	}
 
