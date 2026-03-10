@@ -1,28 +1,28 @@
 package backendharjoitusprojekti.bookstore;
 
-import org.slf4j.Logger;
+/* import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.CommandLineRunner; */
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+/* import org.springframework.context.annotation.Bean; */
 
-import backendharjoitusprojekti.bookstore.domain.AppUser;
+/* import backendharjoitusprojekti.bookstore.domain.AppUser;
 import backendharjoitusprojekti.bookstore.domain.AppUserRepository;
 import backendharjoitusprojekti.bookstore.domain.Book;
 import backendharjoitusprojekti.bookstore.domain.BookRepository;
 import backendharjoitusprojekti.bookstore.domain.Category;
-import backendharjoitusprojekti.bookstore.domain.CategoryRepository;
+import backendharjoitusprojekti.bookstore.domain.CategoryRepository; */
 
 @SpringBootApplication
 public class BookstoreApplication {
-	private static final Logger log = LoggerFactory.getLogger(BookstoreApplication.class);
+	/* private static final Logger log = LoggerFactory.getLogger(BookstoreApplication.class); */
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookstoreApplication.class, args);
 	}
 
-	@Bean
+	/* @Bean
 	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository categoryRepository, AppUserRepository userRepository) {
 		return (args) -> {
 			log.info("save a couple of categories");
@@ -54,6 +54,6 @@ public class BookstoreApplication {
 			userRepository.save(user1);
 			userRepository.save(user2);
 		};
-	}
+	} */
 
 }

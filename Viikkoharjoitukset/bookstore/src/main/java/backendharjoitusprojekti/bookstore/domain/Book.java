@@ -2,34 +2,39 @@ package backendharjoitusprojekti.bookstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
     @Size(min=2, max=50)
+    @Column(name = "title", nullable = false)
     private String title;
     @Size(min=3, max=30)
+    @Column(name = "author", nullable = false)
     private String author;
-    @NotNull
+    @Column(name = "publication_year", nullable = false)
     private int publicationYear;
     @Size(min=5, max=15)
+    @Column(name = "isbn", nullable = false)
     private String isbn;
     @Size(min=4, max=10)
+    @Column(name = "price", nullable = false)
     private String price;
 
-    @JsonIgnoreProperties("books")
+    @JsonIgnoreProperties("book")
     @ManyToOne
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "category_id")
     private Category category;
     
     public Book() {
