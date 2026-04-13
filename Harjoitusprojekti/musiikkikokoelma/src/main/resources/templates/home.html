@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	<head>
+		<title>Etusivu</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+		<!--Sivuston headerin tekoon hyödynnetty lähteenä https://www.thymeleaf.org/doc/articles/layouts.html-->
+		<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+    		<div class="navbar-header">
+				<a href="/home" class="btn btn-dark">Etusivu</a>
+        		<a href="/albumlist" class="btn btn-secondary">Albumit</a>
+				<a href="/artistlist" class="btn btn-info">Artistit</a>
+				<a href="/genrelist" class="btn btn-warning">Genret</a>
+				<a href="/songlist" class="btn btn-primary">Kappaleet</a>
+        	</div>
+			<div class="nav navbar-nav navbar-right">
+				<form th:action="@{/logout}" method="post">
+	    			<input type="submit" value="Kirjaudu ulos" class="btn btn-sm btn-danger"/>
+        		</form>
+			</div>
+    	</div>
+		<h2>Hei <span sec:authentication="name"></span>!</h2>
+	</body>
+</html>

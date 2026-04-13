@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Muokkaa albumia</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+        <h1>Muokkaa albumia</h1>
+        <div>
+            <form th:object="${album}" th:action="@{../editalbum}" action="#" method="post">
+                <label for="id"></label>
+                <input type="hidden" id="id" th:field="*{albumId}" readonly="readonly"/>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="title">Albumi</label>
+                <input type="text" id="title" th:field="*{title}" />
+                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Virhe</div>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="releaseYear">Julkaisuvuosi</label>
+                <input type="text" id="releaseYear" th:field="*{releaseYear}"/>
+                    <div th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}">Virhe</div>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="artistlist">Artisti</label>
+                <select id="artistlist" th:field="*{artist}" class="form-control">
+                    <option th:each="artist : ${artists}"
+                        th:value="${artist.artistId}"
+                        th:text="${artist.name}"></option>
+                </select>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="songs"></label>
+                <input type="hidden" id="songs" th:field="*{songs}" readonly="readonly"/>
+                <div style="clear: both; display: block; height: 10px;"></div>
+                <input type="submit" value="Muokkaa"></input>
+            </form>
+        </div>
+	</body>
+</html>

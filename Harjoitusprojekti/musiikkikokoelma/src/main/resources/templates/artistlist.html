@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	<head>
+		<title>Artistit</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+        <div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+    		<div class="navbar-header">
+				<a href="/home" class="btn btn-dark">Etusivu</a>
+        		<a href="/albumlist" class="btn btn-secondary">Albumit</a>
+				<a href="/artistlist" class="btn btn-info">Artistit</a>
+				<a href="/genrelist" class="btn btn-warning">Genret</a>
+				<a href="/songlist" class="btn btn-primary">Kappaleet</a>
+        	</div>
+			<div class="nav navbar-nav navbar-right">
+				<form th:action="@{/logout}" method="post">
+	    			<input type="submit" value="Kirjaudu ulos" class="btn btn-sm btn-danger"/>
+        		</form>
+			</div>
+    	</div>
+        <h1>Artistit</h1>
+            <span sec:authorize="hasAuthority ('ADMIN')"><a href="/addartist" class="btn btn-success">Lisää artisti</a></span>
+            <table class="table table-striped">
+                <tr>
+                    <th>Artisti</th>
+                    <th>Perustamisvuosi</th>
+                    <th>Albumit</th>
+                    <th>Kappaleet</th>
+                </tr>
+                <tr th:each = "artist : ${artists}">
+                    <td th:text="${artist.name}"></td>
+                    <td th:text="${artist.foundingYear}"></td>
+                    <td> <!--th:each-sisäinen iterointi lähde: https://juhahinkula.github.io/2016-07-16-crudboot-manytomany/-->
+                        <span th:each="album,iterStat : ${artist.albums}">
+                            <span th:text="${album.title}"/><th:block th:if="${!iterStat.last}"><br></th:block>
+                        </span>
+                    </td>
+                    <td>
+                        <span th:each="song,iterStat : ${artist.songs}">
+                            <span th:text="${song.title}"/><th:block th:if="${!iterStat.last}"><br></th:block>
+                        </span>
+                    </td>
+                    <td sec:authorize="hasAuthority ('ADMIN')"><a th:href="@{/editartist/{id}(id=${artist.artistId})}" class="btn btn-info">Muokkaa</a></td>
+                    <td sec:authorize="hasAuthority ('ADMIN')"><a th:if="${artist.songs.empty}" th:href="@{/deleteartist/{id}(id=${artist.artistId})}" class="btn btn-danger">Poista</a></td>
+                </tr>
+            </table>
+	</body>
+</html>

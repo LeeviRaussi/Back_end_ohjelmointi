@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Muokkaa genreä</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+        <h1>Muokkaa genreä</h1>
+        <div>
+            <form th:object="${genre}" th:action="@{../editgenre}" action="#" method="post">
+                <label for="id"></label>
+                <input type="hidden" id="id" th:field="*{genreId}" readonly="readonly"/>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="name">Genre</label>
+                <input type="text" id="name" th:field="*{name}" />
+                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Virhe</div>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="songs"></label>
+                <input type="hidden" id="songs" th:field="*{songs}" readonly="readonly"/>
+                <div style="clear: both; display: block; height: 10px;"></div>
+                <input type="submit" value="Muokkaa"></input>
+            </form>
+        </div>
+	</body>
+</html>

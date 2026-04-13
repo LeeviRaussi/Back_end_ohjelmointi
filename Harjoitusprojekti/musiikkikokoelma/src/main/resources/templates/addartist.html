@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Lisää artisti</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+        <h1>Lisää artisti</h1>
+        <div>
+            <form th:object="${artist}" th:action="@{saveartist}" action="#" method="post">
+                <label for="name">Artisti</label>
+                <input type="text" id="name" th:field="*{name}" />
+                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Virhe</div>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="foundingYear">Perustamisvuosi</label>
+                <input type="text" id="foundingYear" th:field="*{foundingYear}"/>
+                    <div th:if="${#fields.hasErrors('foundingYear')}" th:errors="*{foundingYear}">Virhe</div>
+                <div style="clear: both; display: block; height: 10px;"></div>
+                <input type="submit" value="Tallenna"></input>
+            </form>
+        </div>
+	</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	<head>
+		<title>Kappaleet</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+        <div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+    		<div class="navbar-header">
+				<a href="/home" class="btn btn-dark">Etusivu</a>
+        		<a href="/albumlist" class="btn btn-secondary">Albumit</a>
+				<a href="/artistlist" class="btn btn-info">Artistit</a>
+				<a href="/genrelist" class="btn btn-warning">Genret</a>
+				<a href="/songlist" class="btn btn-primary">Kappaleet</a>
+        	</div>
+			<div class="nav navbar-nav navbar-right">
+				<form th:action="@{/logout}" method="post">
+	    			<input type="submit" value="Kirjaudu ulos" class="btn btn-sm btn-danger"/>
+        		</form>
+			</div>
+    	</div>
+        <h1>Kappaleet</h1>
+            <span sec:authorize="hasAuthority ('ADMIN')"><a href="/addsong" class="btn btn-success">Lisää kappale</a></span>
+            <table class="table table-striped">
+                <tr>
+                    <th>Kappale</th>
+                    <th>Artistit</th>
+                    <th>Julkaisuvuosi</th>
+                    <th>Albumi</th>
+                    <th>Pituus</th>
+                    <th>Genre</th>
+                </tr>
+                <tr th:each = "song : ${songs}">
+                    <td th:text="${song.title}"></td>
+                    <td th:text="${song.artist.name}"></td>
+                    <td th:text="${song.releaseYear}"></td>
+                    <td> <!--th:if-toiminnasta https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#conditional-evaluation-->
+                        <span th:if="${song.album} != null" th:text="${song.album.title}"></span>
+                        <span th:if="${song.album} == null"> </span>
+                    </td>
+                    <td th:text="${song.length}"></td>
+                    <td>
+                        <span th:if="${song.genre} != null" th:text="${song.genre.name}"></span>
+                        <span th:if="${song.genre} == null"> </span>
+                    </td>
+                    <td sec:authorize="hasAuthority ('ADMIN')"><a th:href="@{/editsong/{id}(id=${song.songId})}" class="btn btn-info">Muokkaa</a></td>
+                    <td sec:authorize="hasAuthority ('ADMIN')"><a th:href="@{/deletesong/{id}(id=${song.songId})}" class="btn btn-danger">Poista</a></td>
+                </tr>
+            </table>
+	</body>
+</html>

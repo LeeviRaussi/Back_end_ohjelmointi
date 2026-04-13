@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Lisää kappale</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+        <h1>Lisää kappale</h1>
+        <div>
+            <form th:object="${song}" th:action="@{savesong}" action="#" method="post">
+                <label for="title">Kappale</label>
+                <input type="text" id="title" th:field="*{title}" />
+                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Virhe</div>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="artistlist">Artisti</label>
+                <select id="artistlist" th:field="*{artist}" class="form-control">
+                    <option th:each="artist : ${artists}"
+                        th:value="${artist.artistId}"
+                        th:text="${artist.name}"></option>
+                </select>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="releaseYear">Julkaisuvuosi</label>
+                <input type="text" id="releaseYear" th:field="*{releaseYear}"/>
+                    <div th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}">Virhe</div>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="albumlist">Albumi</label>
+                <select id="albumlist" th:field="*{album}" class="form-control">
+                    <option th:each="album : ${albums}"
+                        th:value="${album.albumId}"
+                        th:text="${album.title}"></option>
+                </select>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="length">Pituus (mm:ss)</label>
+                <input type="text" id="length" th:field="*{length}" />
+                    <div th:if="${#fields.hasErrors('length')}" th:errors="*{length}">Virhe</div>
+                <div style="clear: both; display: block; height: 10px;"></div>
+
+                <label for="genrelist">Genre</label>
+                <select id="genrelist" th:field="*{genre}" class="form-control">
+                    <option th:each="genre : ${genres}"
+                        th:value="${genre.genreId}"
+                        th:text="${genre.name}"></option>
+                </select>
+                <div style="clear: both; display: block; height: 10px;"></div>
+                <input type="submit" value="Tallenna"></input>
+            </form>
+        </div>
+	</body>
+</html>
+
+<!--Many-to-Many rakenteet
+Konvertointi Stringistä Listaksi: https://stackoverflow.com/a/50083301, https://github.com/jmiguelsamper/thymeleafexamples-selectmultiple
+<ul>
+    <li th:each="artist : ${artists}">
+        <div class="form-control">
+            <input type="checkbox" th:field="*{songArtists}" th:value="${artist.artistId}">
+            <label th:text="${artist.name}"></label>
+        </div>
+    </li>
+</ul>
+
+<ul>
+    <li th:each="album : ${albums}">
+        <div class="form-control">
+            <input type="checkbox" th:field="*{songAlbums}" th:value="${album.albumId}">
+            <label th:text="${album.title}"></label>
+        </div>
+    </li>
+</ul>
+
+Vaihtoehtoisesti myös multiple="multiple" selectin optioksi
+-->
